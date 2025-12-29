@@ -3,6 +3,8 @@
 
 using namespace std;
 
+
+//Main Character Creation
 character createCharacter() {
     character c;
     int points = 15;
@@ -11,35 +13,46 @@ character createCharacter() {
 
     cout << "=== Create Character ===\n";
     cout << "Name: ";
-    getline(cin, c.name);
-
-    c.lvl = 1;
+    cin >> c.name;
 
     // base stats
+    c.lvl = 1;
     c.str = 0;
     c.agi = 0;
     c.intel = 0;
-
-    // growth
     c.strGrow = 0;
     c.agiGrow = 0;
     c.intelGrow = 0;
 
-    cout << "\nChoose Main Attribute:\n";
-    cout << "1. Strength\n";
-    cout << "2. Agility\n";
-    cout << "3. Intelligence\n";
-    cout << "Choice: ";
-    cin >> choice;
 
-    switch (choice) {
-        case 1: c.mainAttr = MAIN_STR; break;
-        case 2: c.mainAttr = MAIN_AGI; break;
-        case 3: c.mainAttr = MAIN_INT; break;
-        default: c.mainAttr = MAIN_STR;
+    //Main Attribute
+    while (true){
+        cout << "\nChoose Main Attribute:\n";
+        cout << "1. Strength (Tank)\n";
+        cout << "2. Agility (Physical DPS)\n";
+        cout << "3. Intelligence (Spell Caster)\n";
+        cout << "Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                c.mainAttr = MAIN_STR;
+                break;
+            case 2:
+                c.mainAttr = MAIN_AGI;
+                break;
+            case 3:
+                c.mainAttr = MAIN_INT;
+                break;
+            default:
+                cout << "\nInvalid Attribute\n";
+                continue;
+        }
+        break;
     }
+   
 
-    // ===== BASE STAT DISTRIBUTION =====
+    // Base Stats Distributor
     while (points > 0) {
         cout << "\n[Base Stats] Remaining points: " << points << endl;
         cout << "1. STR  2. AGI  3. INT\n";
@@ -65,7 +78,7 @@ character createCharacter() {
         points -= value;
     }
 
-    // ===== GROWTH DISTRIBUTION =====
+    // Stat Growth Distributor
     while (growPoints > 0) {
         cout << "\n[Growth] Remaining growth points: " << growPoints << endl;
         cout << "1. STR Growth  2. AGI Growth  3. INT Growth\n";
@@ -91,7 +104,7 @@ character createCharacter() {
         growPoints -= value;
     }
 
-    // ===== DERIVED STATS =====
+    // Fixing Stats
     c.hp = c.str * 10;
     c.def = c.agi * 1;
     c.mana = c.intel * 10;
